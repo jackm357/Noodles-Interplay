@@ -43,6 +43,10 @@ download a trained model:
         cd mags
         curl http://download.magenta.tensorflow.org/models/basic_rnn.mag --output basic_rnn.mag
         
+        
+edit the path of the mag file in test.sh
+
+
 run the test script:
 
         ./test.sh
