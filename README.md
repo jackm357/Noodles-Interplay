@@ -35,3 +35,14 @@ If you get errors with the magenta install related to gcc try these:
     sudo apt-get install python3-dev
 
 
+TESTING:
+
+download a trained model:
+        
+        mkdir mags
+        cd mags
+        curl http://download.magenta.tensorflow.org/models/basic_rnn.mag --output basic_rnn.mag
+        
+run the test script:
+
+        ./test.sh
