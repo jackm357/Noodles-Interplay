@@ -1,6 +1,6 @@
 # Noodles-Interplay
 
-I believe we are restricted to unix based systems for magenta development, so hopefully everyone has VMware or a mac to use.
+I believe we are restricted to unix based systems for magenta development, so hopefully everyone has VMware or a mac to use. 
 
 Run the automated install for magenta: 
         Say yes to all prompts
