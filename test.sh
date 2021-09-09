@@ -1,5 +1,5 @@
-BUNDLE_PATH="/home/david/PycharmProjects/Noodles-Interplay/mags/mono.mag"
-CONFIG='mono_rnn'
+BUNDLE_PATH=<"absolute path to downloaded mag file">
+CONFIG='basic_rnn'
 
 melody_rnn_generate \
 --config=${CONFIG} \
