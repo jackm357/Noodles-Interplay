@@ -1,0 +1,21 @@
+<!-- templates/homepage.html -->
+{% extends 'base.html' %}
+{% block title %}Interplay Homepage{% endblock %}
+<head>
+	<style>
+    </style>
+</head>
+<body>
+    {% block content %}
+    <h1>Interplay</h1>
+    {% if user.is_authenticated %}
+      Hi {{ user.username }}!
+    <a href="/profile">Go to Profile</a>
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+    {% else %}
+        <p>You are not logged in! Login or register to begin...</p>
+        <a href="/accounts/login">Login</a>
+        <a href="/accounts/register">Register</a>
+    {% endif %}
+    {% endblock %}
+</body>

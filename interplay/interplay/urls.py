@@ -15,10 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+
+from interplay.views import homepage, profile, saved, community
 
 
 urlpatterns = [
+    path('', homepage.main),
+    path('profile/', profile.main),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('midi/', include('midi.urls')),
+    path('saved/', saved.main),
+    path('community/', community.main),
     path('admin/', admin.site.urls),
 ]
 
