@@ -1,21 +1,31 @@
 <!-- templates/homepage.html -->
 {% extends 'base.html' %}
-{% block title %}Interplay Homepage{% endblock %}
+{% load static %}
+{% block content %}
 <head>
-	<style>
-    </style>
+	<link rel="stylesheet" href="{% static 'styling/homepage.css' %}">
 </head>
 <body>
-    {% block content %}
-    <h1>Interplay</h1>
+<div class="container">
+    <div>
+        <h1>Interplay Sequence Generator</h1>
+        <p>Upload your own MIDI files to generate new note sequences, built with machine learning algorithms,
+            providing you with a new MIDI file to output to your favorite instrument.</p>
+    </div>
+
     {% if user.is_authenticated %}
-      Hi {{ user.username }}!
-    <a href="/profile">Go to Profile</a>
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
+    <div>
+        <p> Hi {{ user.username }}! </p>
+        <a href="/profile">Go to Profile</a>
+        <a href="{% url 'logout' %}">Log Out</a>
+    </div>
     {% else %}
+    <div>
         <p>You are not logged in! Login or register to begin...</p>
         <a href="/accounts/login">Login</a>
         <a href="/accounts/register">Register</a>
+    </div>
     {% endif %}
-    {% endblock %}
+</div>
 </body>
+{% endblock %}

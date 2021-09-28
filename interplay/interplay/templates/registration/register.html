@@ -1,13 +1,19 @@
 <!-- templates/registration/signup.html -->
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-  <h2>Sign up</h2>
+<head>
+  <link rel="stylesheet" href="{% static 'styling/register.css' %}">
+</head>
+<div class="container">
+  <h2>Sign up for Interplay</h2>
+  <br>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Sign Up</button>
   </form>
+</div>
 {% endblock %}

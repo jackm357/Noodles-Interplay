@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <head>
-	<style>
-    </style>
+	<link rel="stylesheet" href="{% static 'styling/profile.css' %}">
 </head>
 <body>
-<h1>User Profile</h1>
-<a href="/saved">See Saved Sequences</a>
-<br>
-<a href="/midi">Generate New Sequence</a>
-<br>
-<a href="/community">Community</a>
-<br>
-<br>
-<a href="/">Homepage</a>
+    <div class="container">
+        <h1>User Profile</h1>
+        <a href="/saved" class="profile_func">See Saved Sequences</a>
+        <br>
+        <a href="/midi" class="profile_func">Generate New Sequence</a>
+        <br>
+        <a href="/community" class="profile_func">Community</a>
+    </div>
 </body>
+{% endblock %}

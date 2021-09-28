@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <head>
-    <meta charset="UTF-8">
-    <title>Saved Sequence</title>
+	<link rel="stylesheet" href="{% static 'styling/saved.css' %}">
 </head>
 <body>
-<h1>Saved Sequences Page</h1>
+    <div class="container">
+        <h1>Saved Sequences Page</h1>
+    </div>
 </body>
-</html>
+{% endblock %}
