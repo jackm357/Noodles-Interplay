@@ -27,6 +27,13 @@ a.midi_func {
 #interpolate {
     background-color: #f2746b;
 }
+#submit {
+    background-color: #f7d977;
+}
+#selector {
+    background-color: #51a8a8;;
+}
+
 .container {
     /* display: flex;
     flex-wrap: nowrap;
