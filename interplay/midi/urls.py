@@ -1,9 +1,9 @@
 from django.urls import path, include
 
 
-from midi.views import midi, contin
+from . import views
 
 urlpatterns = [
-    path('', midi.main),
-    path('continue/', contin.main),
+    path('', views.index, name='main'),
+    path('continue/', views.continue_page, name='continue'),
 ]
