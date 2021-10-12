@@ -6,13 +6,12 @@
 </head>
 <body>
 <div class="container">
-  <h1>Continue</h1>
+  <h1>Generate</h1>
   <br>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+  <form method="post">
     <br>
-    <button id='c_upload' type="submit">Upload</button>
+    {% csrf_token %}
+    <button id='g_upload' type="submit">Generate</button>
   </form>
 </div>
 </body>

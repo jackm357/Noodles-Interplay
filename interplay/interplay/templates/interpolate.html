@@ -6,13 +6,14 @@
 </head>
 <body>
 <div class="container">
-  <h1>Continue</h1>
+  <h1>Interpolate</h1>
   <br>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+    {{ form.as_p }}
     <br>
-    <button id='c_upload' type="submit">Upload</button>
+    <button id='i_upload' type="submit">Upload</button>
   </form>
 </div>
 </body>
