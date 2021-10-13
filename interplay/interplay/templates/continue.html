@@ -1,17 +1,11 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block content %}
-<head>
-	<link rel="stylesheet" href="{% static 'styling/midi.css' %}">
-</head>
-<body>
-    <div class="container">
-        <h1>Continue a MIDI File</h1>
-        <a href="#" class="midi_func" id="selector">Select a file</a>
-        <br>
-        <a href="#" class="midi_func" id="submit">Continue</a>
-        <br>
 
-    </div>
-</body>
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+
+
 {% endblock %}
