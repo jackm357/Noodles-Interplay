@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+	<link rel="stylesheet" href="{% static 'styling/midi_func.css' %}">
+</head>
+<body>
+<div class="container">
+  <h1>Generate</h1>
+  <br>
+  <form method="post">
+    <br>
+    {% csrf_token %}
+    <button id='g_upload' type="submit">Generate</button>
+  </form>
+</div>
+</body>
+{% endblock %}
