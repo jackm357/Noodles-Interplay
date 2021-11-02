@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g@t#m+v$b!7i58zd+&orbo1p=s!%hre*s75%du7h=n$^mfxn6i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'interplay.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME':'interplay_db',
+        'USER':'postgres',
+        'PASSWORD':'Password1',
+        'HOST':'127.0.0.1',
+        'PORT':'5432',
     }
 }
 
