@@ -1,0 +1,42 @@
+a {
+    text-decoration: none;
+    text-align: center;
+    padding: 14px 25px;
+}
+
+h1 {
+    color: white;
+    margin: 10px;
+}
+
+.container {
+    /* display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center; */
+    width: 80%;
+    margin: 0 auto;
+    padding: 25px;
+}
+form {
+    color: white;
+}
+button {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#c_upload {
+    background-color: #f7d977;
+}
+
+#i_upload {
+    background-color: #f2746b;
+}
+
+#g_upload {
+    background-color: #51a8a8;
+}
