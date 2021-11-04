@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
 from .forms import UploadFileForm
-from django.shortcuts import redirectfrom
+from django.shortcuts import redirect
 
 
 def index(req):
