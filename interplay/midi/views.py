@@ -35,7 +35,7 @@ def interpolate_page(request):
             handle_uploaded_file(form)
             return redirect('/midi')
     else:
-        form = UploadFileForm()
+        form = UploadMidiForm()
     return render(request, 'interpolate.html', {'form': form})
 
 # Params
