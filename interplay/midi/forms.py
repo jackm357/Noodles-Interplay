@@ -10,3 +10,5 @@ class UploadMidiForm(ModelForm):
     class Meta:
         model = MidiFile
         fields = ['midi']
+
+

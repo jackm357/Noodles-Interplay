@@ -4,7 +4,20 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from .forms import UploadFileForm, UploadMidiForm
 from django.shortcuts import redirect
+import subprocess
+import os
 
+
+
+var1 = "BUNDLE_PATH=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag"
+var2 = "CONFIG='mono'"
+var3 =  "melody_rnn_generate "
+var4 = "--config='mono' "
+var5 = "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag "
+var6 = "--output_dir=/tmp/melody_rnn/generated "
+var7 = "--num_outputs=10 "
+var8 = "--num_steps=128 "
+var9 = "--primer_melody=\"[60]\" "
 
 def index(req):
     resp = loader.get_template('midi.html').render({}, req)
@@ -13,8 +26,20 @@ def index(req):
 
 def generate_page(request):
     if request.method == 'POST':
+        print("generating")
+        #os.system(var1)
+        #os.system(var2)
+        subprocess.call([var3+var4+var5+var6+var8+var9],shell=True)
+        #os.system('echo $BUNDLE_PATH')
         return HttpResponseRedirect('/midi')
     return render(request, 'generate.html')
+
+def melody_page(request):
+    if request.method == 'POST':
+        modelType=request.POST['model']
+        print(modelType)
+        return HttpResponseRedirect('/midi')
+    return render(request, 'melody.html')
 
 
 def continue_page(request):

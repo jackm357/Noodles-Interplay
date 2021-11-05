@@ -6,13 +6,15 @@
 </head>
 <body>
 <div class="container">
-  <h1>Generate</h1>
+  <h1>Type Select</h1>
   <br>
-  <form method="post">
-    <br>
-    {% csrf_token %}
-    <button id='g_upload' type="submit">Generate</button>
-  </form>
+
+  <br>
+
+    <a id='melodyBtn' href="/midi/melody">Melody</a>
+    <button id='chordsBtn' type="submit">Chords</button>
+    <button id='drumsBtn' type="submit">Drums</button>
+
 </div>
 </body>
 {% endblock %}

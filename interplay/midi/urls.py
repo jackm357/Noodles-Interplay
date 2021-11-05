@@ -8,4 +8,5 @@ urlpatterns = [
     path('continue/', views.continue_page, name='continue'),
     path('interpolate/', views.interpolate_page, name='interpolate'),
     path('generate/', views.generate_page, name='generate'),
+    path('melody/', views.melody_page, name='melody'),
 ]

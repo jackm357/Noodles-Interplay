@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+	<link rel="stylesheet" href="{% static 'styling/midi_func.css' %}">
+</head>
+<body>
+<div class="container">
+  <h1>Generate A Melody</h1>
+  <br>
+
+  <br>
+    <formmethod="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label for="model">Select a ML Generation Model:</label>
+    <select name="model" id="model"required>
+        <option value="basic">Basic</option>
+        <option value="mono">Mono</option>
+        <option value="lookback">Lookback</option>
+        <option value="attention">Attention</option>
+    </select>
+    <br>
+    <br>
+    <label for="steps">Length of sequence to generate: </label>
+    <select name="steps" id="steps" required>
+        <option value="32">32</option>
+        <option value="64">64</option>
+        <option value="96">96</option>
+        <option value="128">128</option>
+        <option value="160">160</option>
+        <option value="192">192</option>
+        <option value="224">224</option>
+        <option value="256">256</option>
+    </select>
+    <br>
+    <br>
+    <label for="note">Starting Note: </label>
+    <select name="note" id="note" required>
+        <option value="60">C</option>
+        <option value="61">C#/Db</option>
+        <option value="62">D</option>
+        <option value="63">D#/Eb</option>
+        <option value="64">E</option>
+        <option value="65">E#/Fb</option>
+        <option value="66">F</option>
+        <option value="67">F#/Gb</option>
+        <option value="68">G</option>
+        <option value="69">G#/Ab</option>
+        <option value="70">A</option>
+        <option value="71">A#/Bb</option>
+        <option value="72">B</option>
+        <option value="73">B#/Cb</option>
+    </select>
+    <br>
+    <br>
+    <button id='m_submit' type="submit">Generate</button>
+    </form>
+</div>
+</body>
+{% endblock %}
