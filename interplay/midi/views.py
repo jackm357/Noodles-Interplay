@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
-from .forms import UploadFileForm
+from .forms import UploadFileForm, UploadMidiForm
+from django.shortcuts import redirect
 
 
 def index(req):
@@ -18,12 +19,14 @@ def generate_page(request):
 
 def continue_page(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        form = UploadMidiForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES['file'].name)
-            return HttpResponseRedirect('/midi')
+            uploaded_midi = form.save(commit=False)
+            uploaded_midi.midi_data = form.cleaned_data['midi'].file.read()
+            uploaded_midi.save()
+            return redirect('/')
     else:
-        form = UploadFileForm()
+        form = UploadMidiForm()
     return render(request, 'continue.html', {'form': form})
 
 
