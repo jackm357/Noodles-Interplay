@@ -4,20 +4,21 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from .forms import UploadFileForm, UploadMidiForm
 from django.shortcuts import redirect
+from .generator import Generator
 import subprocess
 import os
 
 
 
-var1 = "BUNDLE_PATH=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag"
-var2 = "CONFIG='mono'"
-var3 =  "melody_rnn_generate "
-var4 = "--config='mono' "
-var5 = "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag "
-var6 = "--output_dir=/tmp/melody_rnn/generated "
-var7 = "--num_outputs=10 "
-var8 = "--num_steps=128 "
-var9 = "--primer_melody=\"[60]\" "
+# var1 = "BUNDLE_PATH=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag"
+# var2 = "CONFIG='mono'"
+# var3 =  "melody_rnn_generate "
+# var4 = "--config='mono' "
+# var5 = "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag "
+# var6 = "--output_dir=/tmp/melody_rnn/generated "
+# var7 = "--num_outputs=10 "
+# var8 = "--num_steps=128 "
+# var9 = "--primer_melody=\"[60]\" "
 
 def index(req):
     resp = loader.get_template('midi.html').render({}, req)
@@ -36,8 +37,13 @@ def generate_page(request):
 
 def melody_page(request):
     if request.method == 'POST':
-        modelType=request.POST['model']
-        print(modelType)
+        modelType = request.POST.get('model')
+        numSteps = request.POST.get('steps')
+        note = request.POST.get('note')
+        gen = Generator(modelType, numSteps,note)
+        call = gen.buildCall()
+        #print(call)
+        subprocess.call([call], shell=True)
         return HttpResponseRedirect('/midi')
     return render(request, 'melody.html')
 
