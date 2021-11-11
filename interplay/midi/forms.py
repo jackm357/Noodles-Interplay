@@ -1,5 +1,5 @@
 from django import forms
-from models import ContinueUpload, InterpolateUpload
+from midi.models import ContinueUpload, InterpolateUpload
 from django.forms import ModelForm
 
 class UploadFileForm(forms.Form):
@@ -13,5 +13,5 @@ class UploadContinueMidiForm(ModelForm):
 
 class UploadInterpolateMidiForm(ModelForm):
     class Meta:
-        models = InterpolateUpload
+        model = InterpolateUpload
         fields = ['midi']
