@@ -7,6 +7,10 @@ class Document(models.Model):
     document = models.FileField(upload_to='documents/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
-class MidiFile(models.Model):
-    midi = models.FileField()
+class ContinueUpload(models.Model):
+    midi = models.FileField(upload_to="continue/")
+    midi_data = models.BinaryField(null=True)
+
+class InterpolateUpload(models.Model):
+    midi = models.FileField(upload_to="interpolate/")
     midi_data = models.BinaryField(null=True)
