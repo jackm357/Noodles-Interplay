@@ -1,24 +1,21 @@
 from django.http import HttpResponse
 
-class Generator:
+class MelodyGenerator:
 
     steps = ""
     note = ""
     modelType = ""
+    user = ""
+    outDir = ""
+    usersDir = "/home/david/PycharmProjects/Noodles-Interplay/interplay/media/generated/melody/users/"
 
-    def __init__(self, modelType, numSteps, note):
-        #self.request = request
-        # modelType = request.get('model')
-        # numSteps = request.get('steps')
-        # note = request.get('note')
+    def __init__(self, modelType, numSteps, note, user):
 
         self.steps = "--num_steps=" + numSteps + " "
         self.note = "--primer_melody=\"[" + note + "]\" "
         self.modelType = modelType
-
-        #call = buildCall()
-
-
+        self.user = user + " "
+        self.outDir = "--output_dir=" + self.usersDir + self.user
 
     functionName = "melody_rnn_generate "
 
@@ -29,6 +26,8 @@ class Generator:
         "attention": "--config='attention' "
     }
 
+    #Absolute path to mag bundles
+    #be sure to set them properly on the server
     modelDict = {
         "mono": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag ",
         "basic": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/basic_rnn.mag ",
@@ -36,7 +35,9 @@ class Generator:
         "attention": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/attention_rnn.mag "
     }
 
-    outDir = "--output_dir=/tmp/melody_rnn/generated "
+    #directory to output the midi file to
+    #will need to figure out a way to put it in the database for the user
+
     outputs = "--num_outputs=1 "
 
     def buildCall(self):
