@@ -9,6 +9,8 @@ from .midifile import MidiInserter
 import subprocess
 import os
 
+from midi.models import MidiFile
+
 
 def index(req):
     resp = loader.get_template('midi.html').render({}, req)
@@ -59,14 +61,19 @@ def continue_page(request):
 
 def interpolate_page(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        form = UploadMidiForm(request.POST, request.FILES)
+        files = request.FILES.getlist('midi')
         if form.is_valid():
-            handle_uploaded_file(request.FILES['file'].name)
-            return HttpResponseRedirect('/midi')
+            for f in files:
+                uploaded_midi = MidiFile(midi=f)
+                uploaded_midi.midi_data = form.cleaned_data['midi'].file.read()
+                uploaded_midi.user = request.user.get_username()
+                uploaded_midi.name = uploaded_midi.filename()
+                uploaded_midi.source = "interpolate"
+                uploaded_midi.save()
+
+                subprocess.call(['rm', '-r', 'media/uploaded/' + request.user.get_username()])
+            return HttpResponseRedirect('/')
     else:
-        form = UploadFileForm()
+        form = UploadMidiForm()
     return render(request, 'interpolate.html', {'form': form})
-
-
-def handle_uploaded_file(f):
-    print(f)
