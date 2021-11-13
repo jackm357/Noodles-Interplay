@@ -18,6 +18,17 @@ h1 {
     margin: 0 auto;
     padding: 25px;
 }
+
+a.midi_func {
+    /* background-color: #51a8a8; */
+    color: white;
+    padding: 14px 25px;
+    margin: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
 form {
     color: white;
 }
@@ -38,5 +49,21 @@ button {
 }
 
 #g_upload {
+    background-color: #51a8a8;
+}
+
+#melodyBtn {
+    background-color: #51a8a8;
+}
+
+#chordsBtn {
+    background-color: #f2746b;
+}
+
+#drumsBtn {
+    background-color: #f7d977;
+}
+
+#m_submit {
     background-color: #51a8a8;
 }

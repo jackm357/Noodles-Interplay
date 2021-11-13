@@ -6,13 +6,14 @@
 </head>
 <body>
 <div class="container">
-  <h1>Generate</h1>
+  <h1>Type Select</h1>
+
+    <a class="midi_func" id='melodyBtn' href="/midi/melody">Melody</a>
   <br>
-  <form method="post">
-    <br>
-    {% csrf_token %}
-    <button id='g_upload' type="submit">Generate</button>
-  </form>
+    <a class="midi_func" id='chordsBtn' type="submit">Chords</a>
+  <br>
+    <a class="midi_func" id='drumsBtn' type="submit">Drums</a>
+
 </div>
 </body>
 {% endblock %}

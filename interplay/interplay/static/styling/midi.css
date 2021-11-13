@@ -34,6 +34,10 @@ a.midi_func {
     background-color: #51a8a8;;
 }
 
+#melodyBtn {
+    background-color: #51a8a8;
+}
+
 .container {
     /* display: flex;
     flex-wrap: nowrap;
