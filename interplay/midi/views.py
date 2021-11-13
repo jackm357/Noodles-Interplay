@@ -59,7 +59,7 @@ def continue_page(request):
 
 def interpolate_page(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        form = UploadMidiForm(request.POST, request.FILES)
         files = request.FILES.getlist('midi')
         if form.is_valid():
             for f in files:
