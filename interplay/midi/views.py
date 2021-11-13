@@ -73,5 +73,5 @@ def interpolate_page(request):
                 subprocess.call(['rm', '-r', 'media/uploaded' + request.user.get_username])
             return HttpResponseRedirect('/')
     else:
-        form = UploadFileForm()
+        form = UploadMidiForm()
     return render(request, 'interpolate.html', {'form': form})
