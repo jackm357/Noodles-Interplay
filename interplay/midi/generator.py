@@ -14,8 +14,8 @@ class MelodyGenerator:
         self.steps = "--num_steps=" + numSteps + " "
         self.note = "--primer_melody=\"[" + note + "]\" "
         self.modelType = modelType
-        self.user = user + " "
-        self.outDir = "--output_dir=" + self.usersDir + self.user
+        #self.user = user + " "
+        self.outDir = "--output_dir=" + self.usersDir + user + " "
 
     functionName = "melody_rnn_generate "
 
@@ -35,8 +35,6 @@ class MelodyGenerator:
         "attention": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/mags/attention_rnn.mag "
     }
 
-    #directory to output the midi file to
-    #will need to figure out a way to put it in the database for the user
 
     outputs = "--num_outputs=1 "
 
