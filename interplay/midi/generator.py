@@ -7,7 +7,7 @@ class MelodyGenerator:
     modelType = ""
     user = ""
     outDir = ""
-    usersDir = "/home/david/PycharmProjects/Noodles-Interplay/interplay/media/generated/melody/users/"
+    usersDir = "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/melody/users/"
 
     def __init__(self, modelType, numSteps, note, user):
 
@@ -29,10 +29,10 @@ class MelodyGenerator:
     #Absolute path to mag bundles
     #be sure to set them properly on the server
     modelDict = {
-        "mono": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag ",
-        "basic": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/basic_rnn.mag ",
-        "lookback": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/lookback_rnn.mag ",
-        "attention": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/attention_rnn.mag "
+        "mono": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/mags/mono.mag ",
+        "basic": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/mags/basic_rnn.mag ",
+        "lookback": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/mags/lookback_rnn.mag ",
+        "attention": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/mags/attention_rnn.mag "
     }
 
     #directory to output the midi file to
