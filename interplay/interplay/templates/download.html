@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+	<link rel="stylesheet" href="{% static 'styling/midi.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Download</h1>
+
+        <form method="get">
+
+            <button id="m_download" type="submit">Download</button>
+        </form>
+
+
+    </div>
+</body>
+{% endblock %}

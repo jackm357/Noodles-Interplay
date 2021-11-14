@@ -6,6 +6,8 @@ from .forms import UploadFileForm, UploadMidiForm
 from django.shortcuts import redirect
 from .generator import MelodyGenerator
 from .midifile import MidiInserter
+from json import dumps
+import mimetypes
 import subprocess
 import os
 
@@ -14,6 +16,21 @@ def index(req):
     resp = loader.get_template('midi.html').render({}, req)
     return HttpResponse(resp)
 
+def download_page(request):
+    if request.method == 'GET':
+        print(request.user.get_username())
+        user = request.user.get_username()
+        filedir = "media/generated/users/" + user
+        filename = subprocess.check_output(['ls', filedir])
+        filename = filename.decode('utf-8')
+        filename = filename.strip()
+        fullpath = filedir + "/" + filename
+        f = open(fullpath, 'rb')
+        mime_type, _ = mimetypes.guess_type(fullpath)
+        response = HttpResponse(f, content_type=mime_type)
+        response['Content-Disposition'] = "attatchment; filename=%s" % filename
+        return response
+    return render(request, 'download.html')
 
 def generate_page(request):
     if request.method == 'POST':
@@ -27,15 +44,15 @@ def melody_page(request):
         numSteps = request.POST.get('steps')
         note = request.POST.get('note')
         user = request.user.get_username()
+        inserter = MidiInserter(user)
+        inserter.deleteFiles()
         print(user)
         gen = MelodyGenerator(modelType, numSteps, note, user)
         call = gen.buildCall()
         subprocess.call([call], shell=True)
-        inserter = MidiInserter(user)
         inserter.insert()
-        inserter.deleteFiles()
-        print("done")
-        return HttpResponseRedirect('/midi')
+
+        return HttpResponseRedirect('/midi/download')
     return render(request, 'melody.html')
 
 
@@ -50,8 +67,16 @@ def continue_page(request):
             uploaded_midi.source = "continue"
             uploaded_midi.save()
 
-            subprocess.call(['rm', '-r', 'media/uploaded/' +request.user.get_username()])
-            return redirect('/')
+            midi = MidiInserter(request.user.get_username())
+
+            noteSeqJSON = dumps(str(midi.toNoteSeq()))
+
+            print(noteSeqJSON)
+            subprocess.call(['rm', '-r', 'media/uploaded/' + request.user.get_username()])
+            return render(request, 'continue.html', {'data': noteSeqJSON})
+
+
+            #return HttpResponseRedirect('/midi')
     else:
         form = UploadMidiForm()
     return render(request, 'continue.html', {'form': form})

@@ -7,15 +7,15 @@ class MelodyGenerator:
     modelType = ""
     user = ""
     outDir = ""
-    usersDir = "/home/david/PycharmProjects/Noodles-Interplay/interplay/media/generated/melody/users/"
+    usersDir = "media/generated/users/"
 
     def __init__(self, modelType, numSteps, note, user):
 
         self.steps = "--num_steps=" + numSteps + " "
         self.note = "--primer_melody=\"[" + note + "]\" "
         self.modelType = modelType
-        self.user = user + " "
-        self.outDir = "--output_dir=" + self.usersDir + self.user
+        #self.user = user + " "
+        self.outDir = "--output_dir=" + self.usersDir + user + " "
 
     functionName = "melody_rnn_generate "
 
@@ -29,14 +29,12 @@ class MelodyGenerator:
     #Absolute path to mag bundles
     #be sure to set them properly on the server
     modelDict = {
-        "mono": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/interplay/midi/mono.mag ",
+        "mono": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/mono.mag ",
         "basic": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/basic_rnn.mag ",
         "lookback": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/lookback_rnn.mag ",
         "attention": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/mags/attention_rnn.mag "
     }
 
-    #directory to output the midi file to
-    #will need to figure out a way to put it in the database for the user
 
     outputs = "--num_outputs=1 "
 
