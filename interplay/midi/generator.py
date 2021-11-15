@@ -7,7 +7,7 @@ class MelodyGenerator:
     modelType = ""
     user = ""
     outDir = ""
-    usersDir = "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/melody/users/"
+    usersDir = "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/"
 
     def __init__(self, modelType, numSteps, note, user):
 
