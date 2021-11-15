@@ -20,5 +20,8 @@ class MidiFile(models.Model):
     source = models.CharField(max_length=15, blank=False, default='')
     name = models.CharField(max_length=200, blank=False, default='')
 
+    class Meta:
+        db_table="midi_midifile"
+
     def filename(self):
         return os.path.basename(self.midi.name)

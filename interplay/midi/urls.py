@@ -10,4 +10,5 @@ urlpatterns = [
     path('generate/', views.generate_page, name='generate'),
     path('melody/', views.melody_page, name='melody'),
     path('download/', views.download_page, name='download'),
+    path('saved/', views.saved_page)
 ]

@@ -31,6 +31,8 @@ def download_page(request):
         mime_type, _ = mimetypes.guess_type(fullpath)
         response = HttpResponse(f, content_type=mime_type)
         response['Content-Disposition'] = "attatchment; filename=%s" % filename
+        midi = MidiInserter(user)
+        midi.deleteFiles()
         return response
     return render(request, 'download.html')
 
@@ -102,3 +104,7 @@ def interpolate_page(request):
     else:
         form = UploadMidiForm()
     return render(request, 'interpolate.html', {'form': form})
+
+def saved_page(request):
+    results=MidiFile.object.all()
+    return render(request, 'saved.html', {"data":results})
