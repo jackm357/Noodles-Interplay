@@ -10,17 +10,20 @@
 	<br>
 	<table border = "1">
 		<tr>
-<!--				<th>midi</th>-->
+			<th>name</th>
 			<th>user</th>
 			<th>source</th>
-			<th>name</th>
 		</tr>
 		{% for result in data%}
 		<tr>
-<!--				<td>{{result.midi}}</td>-->
+			<td>
+				<form method="post">
+					{% csrf_token %}
+					<button name="idNum" type="submit" value={{result.id}}>{{result.name}}</button>
+				</form>
+			</td>
 			<td>{{result.user}}</td>
 			<td>{{result.source}}</td>
-			<td>{{result.name}}</td>
 		</tr>
 		{% endfor %}
 	</table>
