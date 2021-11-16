@@ -7,7 +7,7 @@ class MelodyGenerator:
     modelType = ""
     user = ""
     outDir = ""
-    usersDir = "media/generated/users/"
+    usersDir = "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/"
 
     def __init__(self, modelType, numSteps, note, user):
 
@@ -29,10 +29,10 @@ class MelodyGenerator:
     #Absolute path to mag bundles
     #be sure to set them properly on the server
     modelDict = {
-        "mono": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/mono.mag ",
-        "basic": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/basic_rnn.mag ",
-        "lookback": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/lookback_rnn.mag ",
-        "attention": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/attention_rnn.mag "
+        "mono": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/models/mags/mono.mag ",
+        "basic": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/models/mags/basic_rnn.mag ",
+        "lookback": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/models/mags/lookback_rnn.mag ",
+        "attention": "--bundle_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/models/mags/attention_rnn.mag "
     }
 
 
@@ -74,9 +74,9 @@ class Interpolater:
     functionName = "music_vae_generate "
 
     modelDict = {
-        "mel_2bar" : "--checkpoint_file=/home/david/PycharmProjects/Noodles-Interplay/models/checkpoints/cat-mel_2bar_big.tar ",
-        "mel_16bar" : "--checkpoint_file=/home/david/PycharmProjects/Noodles-Interplay/models/checkpoints/hierdec-mel_16bar.tar ",
-        "trio_16bar" : "--checkpoint_file=/home/david/PycharmProjects/Noodles-Interplay/models/checkpoints/hierdec-trio_16bar.tar "
+        "mel_2bar" : "--checkpoint_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/models/checkpoints/cat-mel_2bar_big.tar ",
+        "mel_16bar" : "--checkpoint_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/models/checkpoints/hierdec-mel_16bar.tar ",
+        "trio_16bar" : "--checkpoint_file=/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/models/checkpoints/hierdec-trio_16bar.tar "
     }
 
     configDict = {
