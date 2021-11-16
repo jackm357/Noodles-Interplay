@@ -9,10 +9,19 @@
   <h1>Interpolate</h1>
   <br>
   <form method="post" enctype="multipart/form-data">
+    <label for="model">Select a MIDI input type:</label>
+    <select name="model" id="model"required>
+        <option value="mel_2bar">2 Bar Melody</option>
+        <option value="mel_16bar">16 Bar Melody</option>
+        <option value="trio_16bar">16 Bar Trio</option>
+    </select>
+    <br>
+    <br>
     {% csrf_token %}
     {{ form.as_p }}
     {{ form.as_p }}
     <br>
+
     <button id='i_upload' type="submit">Upload</button>
   </form>
 </div>
