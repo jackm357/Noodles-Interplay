@@ -1,10 +1,35 @@
 a {
-    text-decoration: none;
-    text-align: center;
-    padding: 14px 25px;
+	text-decoration: none;
+	text-align: center;
+	padding: 14px 25px;
 }
 
 h1 {
-    color: white;
-    margin: 10px;
+	color: white;
+	margin: 10px;
+}
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+	padding: 25px;
+}
+
+table {
+	width: 100%;
+	background-color: white;
+}
+
+th, td {
+	text-align: center;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+	background-color: white;
+}
+				   
+tr:nth-child(odd) {
+	background-color: #a1a1a1;
 }
