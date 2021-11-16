@@ -3,7 +3,12 @@
 {% block content %}
 <head>
     <link rel="stylesheet" href="{% static 'styling/midi_func.css' %}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.58/Tone.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/1.2.8/tf.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/@magenta/music@^1.0.0/es6/core.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/@magenta/music@^1.0.0/es6/music_rnn.js"></script>-->
+      <script src="https://cdn.jsdelivr.net/npm/@magenta/music@1.18.1"></script>
+
 </head>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -16,6 +21,8 @@
     var data = JSON.parse("{{data|escapejs}}");
     var dataNode = document.getElementById('midi_data');
     dataNode.innerHTML+="{{data|escapejs}}";
-  </script>
+    </script>
+    <script src="{% static 'js/midi.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 {% endblock %}

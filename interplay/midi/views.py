@@ -5,7 +5,9 @@ from django.template import loader
 from .forms import UploadFileForm, UploadMidiForm
 from django.shortcuts import redirect
 from .generator import MelodyGenerator
+from .generator import Interpolater
 from .midifile import MidiInserter
+from .models import MidiFile
 from json import dumps
 import mimetypes
 import subprocess
@@ -29,6 +31,8 @@ def download_page(request):
         mime_type, _ = mimetypes.guess_type(fullpath)
         response = HttpResponse(f, content_type=mime_type)
         response['Content-Disposition'] = "attatchment; filename=%s" % filename
+        midi = MidiInserter(user)
+        midi.deleteFiles()
         return response
     return render(request, 'download.html')
 
@@ -60,19 +64,27 @@ def continue_page(request):
     if request.method == 'POST':
         form = UploadMidiForm(request.POST, request.FILES)
         if form.is_valid():
+            midi = MidiInserter(request.user.get_username())
+            #subprocess.call(['rm', '-r', '-f', 'media/uploaded ' + request.user.get_username()])
+            midi.deleteFiles()
             uploaded_midi = form.save(commit=False)
             uploaded_midi.midi_data = form.cleaned_data['midi'].file.read()
             uploaded_midi.user = request.user.get_username()
             uploaded_midi.name = uploaded_midi.filename()
+
             uploaded_midi.source = "continue"
             uploaded_midi.save()
 
-            midi = MidiInserter(request.user.get_username())
+            url = uploaded_midi.midi.url
+            url = "http://127.0.0.1:8000" + url
+            print(url)
 
-            noteSeqJSON = dumps(str(midi.toNoteSeq()))
+            noteseq = midi.toNoteSeq()
 
-            print(noteSeqJSON)
-            subprocess.call(['rm', '-r', 'media/uploaded/' + request.user.get_username()])
+            noteSeqJSON = dumps(str(noteseq))
+
+            #print(noteSeqJSON)
+            midi.deleteFiles()
             return render(request, 'continue.html', {'data': noteSeqJSON})
 
 
@@ -84,14 +96,34 @@ def continue_page(request):
 
 def interpolate_page(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        form = UploadMidiForm(request.POST, request.FILES)
+        files = request.FILES.getlist('midi')
+        modelType = request.POST.get('model')
+        inserter = MidiInserter(request.user.get_username())
+        inserter.deleteFiles()
+        filesArr = ["", ""]
+        i = 0
         if form.is_valid():
-            handle_uploaded_file(request.FILES['file'].name)
-            return HttpResponseRedirect('/midi')
+            for f in files:
+                uploaded_midi = MidiFile(midi=f)
+                uploaded_midi.midi_data = form.cleaned_data['midi'].file.read()
+                uploaded_midi.user = request.user.get_username()
+                uploaded_midi.name = uploaded_midi.filename()
+                uploaded_midi.source = "interpolate"
+                uploaded_midi.save()
+                filesArr[i] = uploaded_midi.filename()
+                i = 1
+
+
+            interpolate = Interpolater(request.user.get_username(), modelType, filesArr[0], filesArr[1])
+            interpolate.buildCall()
+            subprocess.call([interpolate.buildCall()], shell=True)
+            inserter = MidiInserter(request.user.get_username())
+            inserter.insert()
+            #subprocess.call(['rm', '-r', 'media/uploaded/' + request.user.get_username()])
+            return HttpResponseRedirect('/midi/download')
     else:
-        form = UploadFileForm()
+        form = UploadMidiForm()
     return render(request, 'interpolate.html', {'form': form})
 
 
-def handle_uploaded_file(f):
-    print(f)
