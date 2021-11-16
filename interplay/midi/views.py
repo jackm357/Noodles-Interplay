@@ -104,7 +104,3 @@ def interpolate_page(request):
     else:
         form = UploadMidiForm()
     return render(request, 'interpolate.html', {'form': form})
-
-def saved_page(request):
-    results=MidiFile.object.all()
-    return render(request, 'saved.html', {"data":results})
