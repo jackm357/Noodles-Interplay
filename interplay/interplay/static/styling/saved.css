@@ -31,5 +31,23 @@ tr:nth-child(even) {
 }
 				   
 tr:nth-child(odd) {
-	background-color: #a1a1a1;
+	background-color: #85a6a6;
+}
+
+label {
+    color: white;
+}
+
+.filter_button {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #7a67b8;
+    margin: 5px;
+}
+
+.dl_button {
+    border-radius: 5px;
 }
