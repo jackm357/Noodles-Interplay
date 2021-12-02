@@ -11,18 +11,40 @@ from midi.models import MidiFile
 # example view
 def main(request):
     username = request.user.get_username()
-    results = MidiFile.objects.all().filter(user=username)
-    if request.method == "POST":
-        print(request.POST.get("idNum"))
+    results = MidiFile.objects.all().filter(user=username).order_by("-id")
+    if request.method == "POST" and request.POST.get("seq_display") == "all":
+
+        if request.POST.get("source") != "all":
+            results = MidiFile.objects.all().filter(source=request.POST.get("source")).order_by("-id")
+            return render(request, 'saved.html', {"data": results})
+
+        results = MidiFile.objects.all().order_by("-id")
         print(username)
+        return render(request, 'saved.html', {"data": results})
+
+    if request.method == "POST" and request.POST.get("seq_display") == "user":
+
+        if request.POST.get("source") != "all":
+            results = MidiFile.objects.all().filter(user=username).filter(source=request.POST.get("source")).order_by("-id")
+            return render(request, 'saved.html', {"data": results})
+
+        results = MidiFile.objects.all().filter(user=username).order_by("-id")
+        print(username)
+        return render(request, 'saved.html', {"data": results})
+
+    if request.method == "POST" and request.POST.get("idNum") != "None":
         requested_id = str(request.POST.get("idNum"))
         cursor = connection.cursor()
-        subprocess.call(["mkdir", "-p", "/tmp/"+username])
-        subprocess.call(["chmod", "777", "/tmp/"+username])
-        cursor.execute("COPY (SELECT encode(midi_midifile.midi_data, 'hex') FROM midi_midifile WHERE id = "+requested_id+") TO '/tmp/"+username+"/id"+requested_id+"_out.hex'")
-        subprocess.call(["mkdir", "-p", "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/"+username])
-        subprocess.call(["xxd", "-ps", "-r", "/tmp/"+username+"/id"+requested_id+"_out.hex", "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/"+username+"/id"+requested_id+"_out.mid"])
-        subprocess.call(["sudo", "rm", "-r", "/tmp/"+username])
+        subprocess.call(["mkdir", "-p", "/tmp/" + username])
+        subprocess.call(["chmod", "777", "/tmp/" + username])
+        cursor.execute(
+            "COPY (SELECT encode(midi_midifile.midi_data, 'hex') FROM midi_midifile WHERE id = " + requested_id + ") TO '/tmp/" + username + "/id" + requested_id + "_out.hex'")
+        subprocess.call(
+            ["mkdir", "-p",
+             "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/" + username])
+        subprocess.call(["xxd", "-ps", "-r", "/tmp/" + username + "/id" + requested_id + "_out.hex",
+                         "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/" + username + "/id" + requested_id + "_out.mid"])
+        subprocess.call(["sudo", "rm", "-r", "/tmp/" + username])
         return HttpResponseRedirect('/saved/download')
     return render(request, 'saved.html', {"data" : results})
 

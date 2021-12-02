@@ -7,7 +7,20 @@
 <body>
     <div class="container">
         <h1>Saved Sequences Page</h1>
+		<form method="post">
+			{% csrf_token %}
 	<br>
+			<label for="source">Filter list by source type:</label>
+			<select name="source" id="source"required>
+				<option value="all">All</option>
+        		<option value="generated">Generated</option>
+        		<option value="interpolate">Interpolated Files</option>
+    		</select>
+			<br>
+			<button name="seq_display" type="submit" value="all">Display sequences from all users</button>
+			<button name="seq_display" type="submit" value="user">Display only your sequences</button>
+
+
 	<table border = "1">
 		<tr>
 			<th>name</th>
@@ -17,8 +30,8 @@
 		{% for result in data%}
 		<tr>
 			<td>
-				<form method="post">
-					{% csrf_token %}
+
+
 					<button name="idNum" type="submit" value={{result.id}}>{{result.name}}</button>
 				</form>
 			</td>
