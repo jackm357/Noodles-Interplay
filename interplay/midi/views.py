@@ -5,6 +5,7 @@ from django.template import loader
 from .forms import UploadFileForm, UploadMidiForm
 from django.shortcuts import redirect
 from .generator import MelodyGenerator
+from .generator import ChordGenerator
 from .generator import DrumGenerator
 from .generator import Interpolater
 from .midifile import MidiInserter
@@ -59,6 +60,26 @@ def melody_page(request):
 
         return HttpResponseRedirect('/midi/download')
     return render(request, 'melody.html')
+
+def chord_page(request):
+
+    if request.method == 'POST':
+        note1 = request.POST.get('note1')
+        note2 = request.POST.get('note2')
+        note3 = request.POST.get('note3')
+        steps = request.POST.get('steps')
+        user = request.user.get_username()
+        inserter = MidiInserter(user)
+        inserter.deleteFiles()
+        gen = ChordGenerator(user, steps, note1, note2, note3)
+        call = gen.buildCall()
+        subprocess.call([call], shell=True)
+        inserter.insert("chords")
+
+        return HttpResponseRedirect('/midi/download')
+
+
+    return render(request, 'chords.html')
 
 def drum_page(request):
     if request.method == 'POST':

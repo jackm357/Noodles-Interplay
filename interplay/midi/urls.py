@@ -9,6 +9,7 @@ urlpatterns = [
     path('interpolate/', views.interpolate_page, name='interpolate'),
     path('generate/', views.generate_page, name='generate'),
     path('melody/', views.melody_page, name='melody'),
+    path('chords/', views.chord_page, name='chords'),
     path('drums/', views.drum_page, name='drums'),
     path('download/', views.download_page, name='download')
 ]

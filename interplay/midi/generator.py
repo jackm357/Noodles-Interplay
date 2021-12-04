@@ -1,5 +1,7 @@
-from django.http import HttpResponse
-
+#\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+#MelodyGenerator Class
+#Gets parameters from the melody_page in view, builds and returns a subprocess call
+#////////////////////////////////////////////////////////////////////////////////////////////////
 class MelodyGenerator:
 
     steps = ""
@@ -51,6 +53,43 @@ class MelodyGenerator:
         print(generateCall)
         return generateCall
 
+#\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+#ChordGenerator Class
+#Gets parameters from the chord_page in view, builds and returns a subprocess call
+#////////////////////////////////////////////////////////////////////////////////////////////////
+class ChordGenerator:
+    user = ""
+    outDir = ""
+    usersOutDir = "media/generated/users/"
+    pitches = ""
+    steps = ""
+
+    def __init__(self, user, numSteps, note1, note2, note3):
+        self.pitches = "--primer_pitches=\"[ "+ note1 + "," + note2 + "," + note3 + "]\" "
+        self.user = user
+        self.steps = "--num_steps=" + numSteps + " "
+        self.outDir = "--output_dir=" + self.usersOutDir + user + " "
+
+    bundle_file = "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/poly_rnn.mag "
+    output_num = "--num_outputs=1 "
+    condtionStr = "--condition_on_primer=true --inject_primer_during_generation=false "
+
+    def buildCall(self):
+        generatedCall = "polyphony_rnn_generate "
+        generatedCall += self.bundle_file
+        generatedCall += self.outDir
+        generatedCall += self.output_num
+        generatedCall += self.steps
+        generatedCall += self.pitches
+        generatedCall += self.condtionStr
+
+        return generatedCall
+
+
+#\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+#DrumGenerator Class
+#Gets parameters from the drum_page in view, builds and returns a subprocess call
+#///////////////////////////////////////////////////////////////////////////////////////////////
 class DrumGenerator:
 
     user = ""
@@ -84,6 +123,11 @@ class DrumGenerator:
         print(generateCall)
         return generateCall
 
+
+#\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+#Interpolater class
+#Gets parameters from iterpolate_page function in views.py, builds and returns a subprocess call
+#////////////////////////////////////////////////////////////////////////////////////////////////
 class Interpolater:
 
     user = ""
