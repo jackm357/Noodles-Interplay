@@ -17,7 +17,7 @@ class MidiFile(models.Model):
     midi = models.FileField(upload_to=user_directory_path)
     midi_data = models.BinaryField(null=True)
     user = models.CharField(max_length=128, blank=False, default='')
-    source = models.CharField(max_length=15, blank=False, default='')
+    source = models.CharField(max_length=30, blank=False, default='')
     name = models.CharField(max_length=200, blank=False, default='')
 
     class Meta:

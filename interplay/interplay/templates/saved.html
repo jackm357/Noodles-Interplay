@@ -14,9 +14,11 @@
 				<label for="source">Filter by Source:</label>
 				<select name="source" id="source"required>
 					<option value="all">All</option>
-					<option value="generated">Generated</option>
-					<option value="interpolate">Interpolated Files</option>
+					<option value="generated-melody">Generated Melody</option>
+					<option value="generated-drums">Generated Drums</option>
+					<option value="interpolation">Interpolated Files</option>
 				</select>
+
 				<button class='filter_button' name="seq_display" type="submit" value="all">Display All User Sequences</button>
 				<button class='filter_button' name="seq_display" type="submit" value="user">Display Only Your Sequences</button>
 			</div>
@@ -34,7 +36,7 @@
 			</form>
 			</td>
 			<td>{{result.user}}</td>
-			<td>{{result.source}}</td>
+			<td name="sourceType" value={{result.source}}>{{result.source}}</td>
 		</tr>
 		{% endfor %}
 	</table>

@@ -5,6 +5,7 @@ from django.template import loader
 from .forms import UploadFileForm, UploadMidiForm
 from django.shortcuts import redirect
 from .generator import MelodyGenerator
+from .generator import DrumGenerator
 from .generator import Interpolater
 from .midifile import MidiInserter
 from .models import MidiFile
@@ -54,44 +55,57 @@ def melody_page(request):
         gen = MelodyGenerator(modelType, numSteps, note, user)
         call = gen.buildCall()
         subprocess.call([call], shell=True)
-        inserter.insert()
+        inserter.insert("melody")
 
         return HttpResponseRedirect('/midi/download')
     return render(request, 'melody.html')
 
-
-def continue_page(request):
+def drum_page(request):
     if request.method == 'POST':
-        form = UploadMidiForm(request.POST, request.FILES)
-        if form.is_valid():
-            midi = MidiInserter(request.user.get_username())
-            #subprocess.call(['rm', '-r', '-f', 'media/uploaded ' + request.user.get_username()])
-            midi.deleteFiles()
-            uploaded_midi = form.save(commit=False)
-            uploaded_midi.midi_data = form.cleaned_data['midi'].file.read()
-            uploaded_midi.user = request.user.get_username()
-            uploaded_midi.name = uploaded_midi.filename()
+        drumType = request.POST.get('model')
+        user = request.user.get_username()
+        inserter = MidiInserter(user)
+        inserter.deleteFiles()
+        gen = DrumGenerator(user, drumType)
+        call = gen.buildCall()
+        subprocess.call([call], shell=True)
+        inserter.insert("drums")
 
-            uploaded_midi.source = "continue"
-            uploaded_midi.save()
+        return HttpResponseRedirect('/midi/download')
+    return render(request, 'drums.html')
 
-            url = uploaded_midi.midi.url
-            url = "http://127.0.0.1:8000" + url
-            print(url)
-
-            noteseq = midi.toNoteSeq()
-
-            noteSeqJSON = dumps(str(noteseq))
-
-            #print(noteSeqJSON)
-            midi.deleteFiles()
-            return render(request, 'continue.html', {'data': noteSeqJSON})
+# def continue_page(request):
+#     if request.method == 'POST':
+#         form = UploadMidiForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             midi = MidiInserter(request.user.get_username())
+#             #subprocess.call(['rm', '-r', '-f', 'media/uploaded ' + request.user.get_username()])
+#             midi.deleteFiles()
+#             uploaded_midi = form.save(commit=False)
+#             uploaded_midi.midi_data = form.cleaned_data['midi'].file.read()
+#             uploaded_midi.user = request.user.get_username()
+#             uploaded_midi.name = uploaded_midi.filename()
+#
+#             uploaded_midi.source = "continue"
+#             uploaded_midi.save()
+#
+#             url = uploaded_midi.midi.url
+#             url = "http://127.0.0.1:8000" + url
+#             print(url)
+#
+#             noteseq = midi.toNoteSeq()
+#
+#             noteSeqJSON = dumps(str(noteseq))
+#
+#             #print(noteSeqJSON)
+#             midi.deleteFiles()
+#             return render(request, 'continue.html', {'data': noteSeqJSON})
 
 
             #return HttpResponseRedirect('/midi')
-    else:
-        form = UploadMidiForm()
-    return render(request, 'continue.html', {'form': form})
+    # else:
+    #     form = UploadMidiForm()
+    # return render(request, 'continue.html', {'form': form})
 
 
 def interpolate_page(request):
@@ -109,7 +123,7 @@ def interpolate_page(request):
                 uploaded_midi.midi_data = form.cleaned_data['midi'].file.read()
                 uploaded_midi.user = request.user.get_username()
                 uploaded_midi.name = uploaded_midi.filename()
-                uploaded_midi.source = "interpolate"
+                uploaded_midi.source = "interpolate-upload"
                 uploaded_midi.save()
                 filesArr[i] = uploaded_midi.filename()
                 i = 1
@@ -119,7 +133,7 @@ def interpolate_page(request):
             interpolate.buildCall()
             subprocess.call([interpolate.buildCall()], shell=True)
             inserter = MidiInserter(request.user.get_username())
-            inserter.insert()
+            inserter.insert("interpolation")
             #subprocess.call(['rm', '-r', 'media/uploaded/' + request.user.get_username()])
             return HttpResponseRedirect('/midi/download')
     else:

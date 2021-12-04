@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+	<link rel="stylesheet" href="{% static 'styling/midi_func.css' %}">
+</head>
+<body>
+<div class="container">
+  <h1>Generate A Drum Sequence</h1>
+
+  <br>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label for="model">Select:</label>
+    <select name="model" id="model"required>
+        <option value="basic">4 Bar Basic</option>
+        <option value="groove">4 Bar Groove</option>
+    </select>
+
+    <br>
+    <br>
+
+    <button id='m_submit' type="submit">Generate</button>
+    </form>
+</div>
+</body>
+{% endblock %}

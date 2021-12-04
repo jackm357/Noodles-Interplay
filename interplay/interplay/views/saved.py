@@ -34,6 +34,7 @@ def main(request):
 
     if request.method == "POST" and request.POST.get("idNum") != "None":
         requested_id = str(request.POST.get("idNum"))
+        source_type = str(request.POST.get("sourceType"))
         cursor = connection.cursor()
         subprocess.call(["mkdir", "-p", "/tmp/" + username])
         subprocess.call(["chmod", "777", "/tmp/" + username])
@@ -43,7 +44,7 @@ def main(request):
             ["mkdir", "-p",
              "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/" + username])
         subprocess.call(["xxd", "-ps", "-r", "/tmp/" + username + "/id" + requested_id + "_out.hex",
-                         "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/" + username + "/id" + requested_id + "_out.mid"])
+                         "/home/ubuntu/dev_env/virtual_env/Noodles-Interplay/interplay/media/generated/users/" + username + "/" + source_type + requested_id + "_out.mid"])
         subprocess.call(["sudo", "rm", "-r", "/tmp/" + username])
         return HttpResponseRedirect('/saved/download')
     return render(request, 'saved.html', {"data" : results})
