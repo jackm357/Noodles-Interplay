@@ -3,6 +3,19 @@
 {% block content %}
 <head>
 	<link rel="stylesheet" href="{% static 'styling/midi_func.css' %}">
+
+    <script>
+        function lengthCheck(element){
+            var div = document.getElementById("lengthDiv");
+            if (element.value == "2vae" || element.value == "16vae"){
+                div.style.display = 'none';
+            }
+            else {
+                div.style.display = 'block';
+            }
+
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -13,25 +26,30 @@
     {% csrf_token %}
 
     <label for="model">Select a ML Generation Model:</label>
-    <select name="model" id="model"required>
-        <option value="basic">Basic</option>
-        <option value="mono">Mono</option>
-        <option value="lookback">Lookback</option>
-        <option value="attention">Attention</option>
+    <select name="model" id="model" onchange="lengthCheck(this)" required>
+
+        <option value="basic">RNN Basic</option>
+        <option value="mono">RNN Mono</option>
+        <option value="lookback">RNN Lookback</option>
+        <option value="attention">RNN Attention</option>
+        <option value="2vae">VAE 2 Bar</option>
+        <option value="16vae">VAE 16 Bar</option>
     </select>
     <br>
     <br>
-    <label for="steps">Length of sequence to generate: </label>
-    <select name="steps" id="steps" required>
-        <option value="32">32</option>
-        <option value="64">64</option>
-        <option value="96">96</option>
-        <option value="128">128</option>
-        <option value="160">160</option>
-        <option value="192">192</option>
-        <option value="224">224</option>
-        <option value="256">256</option>
-    </select>
+        <div id="lengthDiv">
+        <label for="steps">Length of sequence to generate: </label>
+        <select name="steps" id="steps" required>
+            <option value="32">32</option>
+            <option value="64">64</option>
+            <option value="96">96</option>
+            <option value="128">128</option>
+            <option value="160">160</option>
+            <option value="192">192</option>
+            <option value="224">224</option>
+            <option value="256">256</option>
+        </select>
+
     <br>
     <br>
     <label for="note">Starting Note: </label>
@@ -51,6 +69,7 @@
         <option value="72">B</option>
         <option value="73">B#/Cb</option>
     </select>
+            </div>
     <br>
     <br>
     <button id='m_submit' type="submit">Generate</button>

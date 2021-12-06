@@ -67,3 +67,7 @@ button {
 #m_submit {
     background-color: #51a8a8;
 }
+
+#lengthDiv {
+    display: block;
+}

@@ -4,6 +4,26 @@
 <head>
 	<link rel="stylesheet" href="{% static 'styling/saved.css' %}">
 
+	<script>
+
+		function showDelete(){
+			console.log("showDelete()");
+			var th = document.getElementById("deleteHeader");
+			var td = document.getElementById("deleteData");
+
+			if (th.style.display == 'none' && td.style.display == 'none'){
+				th.style.display = 'block';
+				td.style.display = 'block';
+			}
+			else
+			{
+				th.style.display = 'none';
+				td.style.display = 'none';
+			}
+
+		}
+
+	</script>
 </head>
 <body>
     <div class="container">
@@ -24,8 +44,8 @@
 <!--			</form>-->
 <!--			<form>-->
 <!--				<input type="hidden" name="savedForms" value="selectUser">-->
-				<button class='filter_button' name="seq_display" type="submit" value="all" onclick="showDelete">Display All User Sequences</button>
-				<button class='filter_button' name="seq_display" type="submit" value="user" onclick="showDelete">Display Only Your Sequences</button>
+				<button class='filter_button' name="seq_display" type="submit" value="all">Display All User Sequences</button>
+				<button class='filter_button' name="seq_display" type="submit" value="user">Display Only Your Sequences</button>
 			</div>
 			</form>
 
@@ -34,6 +54,9 @@
 			<th>name</th>
 			<th>user</th>
 			<th>source</th>
+			<div id="deleteHeader">
+				<th>Delete</th>
+			</div>
 
 		</tr>
 		{% for result in data%}
@@ -48,7 +71,16 @@
 			</td>
 			<td>{{result.user}}</td>
 			<td name="sourceType" value={{result.source}}>{{result.source}}</td>
-
+			<div id="deleteData">
+				<td>
+				<form method="post">
+					{% csrf_token %}
+					<input type="hidden" name="savedForms" value="deleteBtn">
+                  <input type="hidden" name="sourceType" value="{{result.source}}">
+					<button class='dl_button' name="deleteBtn" type="submit" value={{result.id}}>Delete</button>
+				</form>
+			</td>
+			</div>
 
 
 		</tr>

@@ -19,13 +19,14 @@ class MelodyGenerator:
         #self.user = user + " "
         self.outDir = "--output_dir=" + self.usersDir + user + " "
 
-    functionName = "melody_rnn_generate "
 
     configDict = {
         "mono": "--config='mono' ",
         "basic": "--config='basic' ",
         "lookback": "--config='lookback' ",
-        "attention": "--config='attention' "
+        "attention": "--config='attention' ",
+        "2vae": "--config='cat-mel_2bar_big' ",
+        "16vae": "--config='hierdec-mel_16bar' "
     }
 
     #Absolute path to mag bundles
@@ -34,7 +35,9 @@ class MelodyGenerator:
         "mono": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/mono.mag ",
         "basic": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/basic_rnn.mag ",
         "lookback": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/lookback_rnn.mag ",
-        "attention": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/attention_rnn.mag "
+        "attention": "--bundle_file=/home/david/PycharmProjects/Noodles-Interplay/models/mags/attention_rnn.mag ",
+        "2vae": "--checkpoint_file=/home/david/PycharmProjects/Noodles-Interplay/models/checkpoints/cat-mel_2bar_big.tar ",
+        "16vae": "--checkpoint_file=/home/david/PycharmProjects/Noodles-Interplay/models/checkpoints/hierdec-mel_16bar.tar "
     }
 
 
@@ -42,13 +45,22 @@ class MelodyGenerator:
 
     def buildCall(self):
 
-        generateCall = self.functionName
-        generateCall += self.configDict[self.modelType]
-        generateCall += self.modelDict[self.modelType]
-        generateCall += self.outDir
-        generateCall += self.outputs
-        generateCall += self.steps
-        generateCall += self.note
+        if self.modelType != "2vae" and self.modelType != "16vae":
+
+            generateCall = "melody_rnn_generate "
+            generateCall += self.configDict[self.modelType]
+            generateCall += self.modelDict[self.modelType]
+            generateCall += self.outDir
+            generateCall += self.outputs
+            generateCall += self.steps
+            generateCall += self.note
+        else:
+            generateCall = "music_vae_generate "
+            generateCall += self.configDict[self.modelType]
+            generateCall += self.modelDict[self.modelType]
+            generateCall += "--mode=sample "
+            generateCall += self.outputs
+            generateCall += self.outDir
 
         print(generateCall)
         return generateCall
